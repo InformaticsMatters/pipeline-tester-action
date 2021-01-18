@@ -1,0 +1,15 @@
+---
+name: 'Pipeline Tester'
+description: 'A Squonk Pipelines Tester Action'
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        curl -s get.sdkman.io | bash
+        source "$HOME/.sdkman/bin/sdkman-init.sh"
+        sdk install groovy
+        git clone https://github.com/InformaticsMatters/pipelines-utils.git
+        pushd pipelines-utils/src/groovy
+        groovy PipelineTester.groovy -indocker
+        popd
+      shell: bash
